@@ -1,31 +1,78 @@
 import React, { useState } from "react";
-import "../styles/registerSheet.css";
+import axios from "axios";
 
 export default function Login() {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
   const [show, setShow] = useState(false);
 
-  const showPassword = () => {
-    setShow(!show);
+  const handlePassword = (e) => {
+    setUser({
+      ...user,
+      password: e.target.value,
+    });
+  };
+
+  const handleEmail = (e) => {
+    setUser({
+      ...user,
+      email: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const postUser = {
+      email: user.email,
+      password: user.password,
+      // role : "USER",
+    };
+    console.log(postUser);
+
+    axios
+      .post("http://localhost:8080/api/v1/auth/authenticate", postUser)
+      //   .then((response) => console.table(response))
+      .then((response) =>
+        sessionStorage.setItem("key", response.data.access_token)
+      )
+      .then(() => console.log(sessionStorage.getItem("key")));
+
+    setUser({
+      email: "",
+      password: "",
+    });
   };
 
   return (
-    <div className="register-container">
-      <h1 className="register-header"> Sign in </h1>
-      <div className="label-container">
-        <form className="register-labels">
-          <label htmlFor="email" id="email-label">
-            Enter e-mail:
-          </label>
-          <input type="text" id="email" />
-          <label htmlFor="password" id="password-label">
-            Enter password:
-          </label>
-          <input type={show ? "text" : "password"} id="password" />
+    <div>
+      <h1> Sign in </h1>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">E-mail:</label>
+            <input
+              type="text"
+              value={user.email}
+              onChange={handleEmail}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type={show ? "text" : "password"}
+              // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              value={user.password}
+              onChange={handlePassword}
+              required
+            />
+          </div>
+          <input type="submit" />
         </form>
-        <button onClick={showPassword} id="show-button">
-          {" "}
-          show{" "}
-        </button>
       </div>
     </div>
   );
