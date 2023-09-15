@@ -1,5 +1,6 @@
 import React from "react";
 import Register from "./Register";
+import Login from "./Login";
 
 export default function HomePage() {
   return (
@@ -7,6 +8,7 @@ export default function HomePage() {
       <div>
         <h1> Home </h1>
         <Register />
+        <Login />
       </div>
     </div>
   );
