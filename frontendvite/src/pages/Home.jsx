@@ -1,31 +1,33 @@
 import React from "react";
 import { useState } from "react";
 import LoginPage from "./LoginPage";
+import axios from "axios";
+import { AuthHeader } from "../auth/authorization";
 
 export default function HomePage() {
-  // const [color, setColor] = useState("red");
-  // const [user, setUser] = useState("");
-  const [show, setShow] = useState(true);
+  // const [show, setShow] = useState(true);
+
+  let token = sessionStorage.getItem("key");
+  console.log(token);
+
+  console.log(AuthHeader());
+
+  axios
+    .get("http://localhost:8080/api/v1/demo-controller", AuthHeader())
+    .then((response) => console.log(response));
+
+  // axios.get(
+  //   "http://localhost:8080/api/v1/demo-controller",
+  //   sessionStorage.getItem("key")
+  // );
 
   return (
     <>
-      {/* <h1>My favorite color is {color}!</h1>
-      <button type="button" onClick={() => setColor("blue")}>
-        Blue
-      </button>
-
-      <h1>My name is {user}!</h1>
-      <button
-        type="button"
-        onClick={() => setUser(sessionStorage.getItem("key"))}
-      >
-        show name
-      </button> */}
-
       <div>
-        {show ? null : <LoginPage />}
-
-        <button onClick={() => setShow(!show)}> show </button>
+        <h1>Welcome </h1>
+        <LoginPage />
+        {/* <button onClick={() => setShow(!show)}> show </button>
+        {show ? null : <LoginPage />} */}
       </div>
     </>
   );
