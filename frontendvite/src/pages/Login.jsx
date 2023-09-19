@@ -29,10 +29,13 @@ export default function Login() {
     let authBody = { email: email, password: password };
     console.log(authBody);
 
-    let authResp = await axios.post(
-      "http://localhost:8080/api/v1/auth/authenticate",
-      authBody
-    );
+    let authResp = await axios
+      .post(
+        "http://localhost:8080/api/v1/auth/authenticate",
+        authBody
+        //ADD CATCH
+      )
+      .catch();
     console.log(authResp.data);
 
     sessionStorage.setItem("access_token", authResp.data.access_token);

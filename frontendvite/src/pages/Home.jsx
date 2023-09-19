@@ -28,7 +28,6 @@ export default function HomePage() {
   return (
     <>
       <div>
-        <h1>Welcome </h1>
         <Auth />
         {/* <LoginPage /> */}
         {/* <button onClick={() => setShow(!show)}> show </button>

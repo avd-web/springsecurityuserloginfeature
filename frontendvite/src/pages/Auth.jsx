@@ -6,9 +6,9 @@ import UserPage from "./UserPage";
 export default function Auth() {
   //   console.log(AuthHeader());
 
-  //   axios
-  //     .get("http://localhost:8080/api/v1/demo-controller", AuthHeader())
-  //     .then((response) => console.log(response));
+  // axios
+  //   .get("http://localhost:8080/api/v1/demo-controller", AuthHeader())
+  //   .then((response) => console.log(response));
 
   function authenticate() {
     let token = null;
