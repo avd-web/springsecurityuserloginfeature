@@ -3,18 +3,22 @@ import { useState } from "react";
 import LoginPage from "./LoginPage";
 import axios from "axios";
 import { AuthHeader } from "../auth/authorization";
+import Auth from "./Auth";
 
 export default function HomePage() {
   // const [show, setShow] = useState(true);
 
-  let token = sessionStorage.getItem("key");
-  console.log(token);
+  //WRITE FUNCTION HERE
+  //I WANT TO sessionStorage.getItem("user_email") ON LOADING HOMEPAGE
 
-  console.log(AuthHeader());
+  // let token = sessionStorage.getItem("key");
+  // console.log(token);
 
-  axios
-    .get("http://localhost:8080/api/v1/demo-controller", AuthHeader())
-    .then((response) => console.log(response));
+  // console.log(AuthHeader());
+
+  // axios
+  //   .get("http://localhost:8080/api/v1/demo-controller", AuthHeader())
+  //   .then((response) => console.log(response));
 
   // axios.get(
   //   "http://localhost:8080/api/v1/demo-controller",
@@ -25,7 +29,8 @@ export default function HomePage() {
     <>
       <div>
         <h1>Welcome </h1>
-        <LoginPage />
+        <Auth />
+        {/* <LoginPage /> */}
         {/* <button onClick={() => setShow(!show)}> show </button>
         {show ? null : <LoginPage />} */}
       </div>
