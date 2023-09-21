@@ -30,11 +30,8 @@ export default function Login() {
     console.log(authBody);
 
     let authResp = await axios
-      .post(
-        "http://localhost:8080/api/v1/auth/authenticate",
-        authBody
-        //ADD CATCH
-      )
+      .post("http://localhost:8080/api/v1/auth/authenticate", authBody)
+      //ADD CATCH
       .catch();
     console.log(authResp.data);
 

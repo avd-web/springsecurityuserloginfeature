@@ -6,14 +6,29 @@ import UserPage from "./UserPage";
 
 export default function HomePage() {
   const getUserDetails = async () => {
-    const userDetails = await axios.get(
-      "http://localhost:8080/api/v1/user",
-      AuthHeader()
-    );
+    if (!AuthHeader() === null) {
+      const userDetails = await axios.get(
+        "http://localhost:8080/api/v1/user",
+        AuthHeader()
+      );
 
-    console.log(userDetails.data);
-    return userDetails.data;
+      console.log(userDetails.data);
+      return userDetails.data;
+    }
   };
+
+  // const getToken = async () => {
+  //   try {
+  //     const token = await axios.post(keys.sessionURL, {
+  //       email: keys.verificationEmail,
+  //       password: keys.verificationPassword,
+  //     });
+  //     return {token, isAuthError: false};
+  //   } catch (err) {
+  //     // throw new Error('Unable to establish a login session.'); // here I'd like to send the error to the user instead
+  //     return {err, isAuthError: true};
+  //   }
+  // };
 
   // const userDetails = axios
   //   .get("http://localhost:8080/api/v1/user", AuthHeader())
