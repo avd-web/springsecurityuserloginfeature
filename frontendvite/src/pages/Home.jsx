@@ -6,7 +6,8 @@ import UserPage from "./UserPage";
 
 export default function HomePage() {
   const getUserDetails = async () => {
-    if (!AuthHeader() === null) {
+    if (AuthHeader()) {
+      // console.log(AuthHeader());
       const userDetails = await axios.get(
         "http://localhost:8080/api/v1/user",
         AuthHeader()
