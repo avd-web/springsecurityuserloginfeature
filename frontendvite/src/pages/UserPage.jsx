@@ -5,7 +5,9 @@ import { DashboardContext } from "./Context";
 
 export default function UserPage() {
   const user = useContext(DashboardContext);
-  console.log(user);
+  user.then((data) => {
+    console.log(data);
+  });
   // function getUser sessionStorage.getItem("user_email")
 
   // function getUser() {

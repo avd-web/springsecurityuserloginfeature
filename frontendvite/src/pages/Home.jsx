@@ -5,21 +5,31 @@ import { DashboardContext } from "./Context";
 import UserPage from "./UserPage";
 
 export default function HomePage() {
-  const userDetails = axios
-    .get("http://localhost:8080/api/v1/user", AuthHeader())
-    .then((response) => {
-      const UserDetails = {
-        userFirstName: response.data.firstname,
-        userLastName: response.data.lastname,
-        userEmail: response.data.email,
-      };
-      return userDetails;
-    })
-    .catch((error) => console.log(error));
+  const getUserDetails = async () => {
+    const userDetails = await axios.get(
+      "http://localhost:8080/api/v1/user",
+      AuthHeader()
+    );
+
+    console.log(userDetails.data);
+    return userDetails.data;
+  };
+
+  // const userDetails = axios
+  //   .get("http://localhost:8080/api/v1/user", AuthHeader())
+  //   .then((response) => {
+  //     const UserDetails = {
+  //       userFirstName: response.data.firstname,
+  //       userLastName: response.data.lastname,
+  //       userEmail: response.data.email,
+  //     };
+  //     return userDetails;
+  //   })
+  //   .catch((error) => console.log(error));
 
   return (
     <>
-      <DashboardContext.Provider value={userDetails}>
+      <DashboardContext.Provider value={getUserDetails()}>
         <UserPage />
       </DashboardContext.Provider>
     </>
