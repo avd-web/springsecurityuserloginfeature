@@ -8,6 +8,20 @@ export default function UserPage() {
   user.then((data) => {
     console.log(data);
   });
+
+  // function getUser() {
+  //   const user = useContext(DashboardContext);
+  //   user.then((data) => {
+  //     // console.log(data);
+  //     setUserCredentials({
+  //       firstname: data.firstname,
+  //       lastname: data.lastname,
+  //       email: data.email,
+  //     });
+  //     console.log(data.firstname);
+  //   });
+  // }
+
   // function getUser sessionStorage.getItem("user_email")
 
   // function getUser() {
