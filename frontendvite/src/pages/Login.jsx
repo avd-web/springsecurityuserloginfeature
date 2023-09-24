@@ -1,24 +1,15 @@
-// await axios
-// .post("http://localhost:8080/api/v1/auth/authenticate", postUser)
-// //   .then((response) => console.table(response))
-// .then((response) =>
-//   sessionStorage.setItem("key", response.data.access_token)
-// )
-// .then(() => console.log(sessionStorage.getItem("key")));
-
-// await axios
-// .get("http://localhost:8080/api/v1/demo-controller", sessionStorage.getItem("key"))
-// .then((response) => console.log(response));
-
 import React, { useState } from "react";
 import axios from "axios";
-import { AuthHeader } from "../auth/authorization";
+import { DashboardContext } from "./Context";
+import UserPage from "./UserPage";
 
 export default function Login() {
   const [show, setShow] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [authResp, setAuthResp] = useState(null);
 
   const showPassword = () => {
     setShow(!show);
@@ -31,26 +22,15 @@ export default function Login() {
 
     let authResp = await axios
       .post("http://localhost:8080/api/v1/auth/authenticate", authBody)
-      //ADD CATCH
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
       .catch();
-    console.log(authResp.data);
 
-    sessionStorage.setItem("access_token", authResp.data.access_token);
-    sessionStorage.setItem("refres_token", authResp.data.refresh_token);
-    sessionStorage.setItem("user_email", email);
-    console.log(sessionStorage.getItem("user_email"));
-    console.log(AuthHeader());
-    // console.log({
-    //   headers: {
-    //     Authorization: "Bearer " + sessionStorage.getItem("access_token"),
-    //   },
-    // });
+    setAuthResp(authResp);
+    console.log(authResp);
 
-    let demo = await axios.get(
-      "http://localhost:8080/api/v1/demo-controller",
-      AuthHeader()
-    );
-    console.log(demo);
     emptyForm();
   };
 
@@ -95,7 +75,9 @@ export default function Login() {
           {" "}
           show{" "}
         </button>
-        {/* <NavLink name={"register"} link={"/register"} /> */}
+        <DashboardContext.Provider value={authResp}>
+          <UserPage />
+        </DashboardContext.Provider>
       </div>
     </div>
   );
