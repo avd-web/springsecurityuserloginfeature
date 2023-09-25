@@ -35,6 +35,10 @@ export default function Login() {
     setPassword("");
   };
 
+  const handleLogout = () => {
+    setAuthResp(null);
+  };
+
   try {
     if (!authResp) {
       return (
@@ -79,6 +83,7 @@ export default function Login() {
             <UserPage />
           </DashboardContext.Provider>
           <p>You are logged in</p>
+          <button onClick={handleLogout}>Logout</button>
         </>
       );
     }
