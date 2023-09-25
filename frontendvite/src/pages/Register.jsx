@@ -116,7 +116,7 @@ export default function Register() {
             <label htmlFor="password-input"> Password: </label>
             <input
               type="password"
-              // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               value={user.password}
               onChange={handlePassword}
               required
@@ -126,7 +126,7 @@ export default function Register() {
             <label htmlFor="second-password-input"> Re-enter password: </label>
             <input
               type="password"
-              // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               value={user.secondpassword}
               onChange={handleSecondPassword}
               required

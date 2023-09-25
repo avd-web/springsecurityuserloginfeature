@@ -1,79 +1,89 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { DashboardContext } from "./Context";
+import UserPage from "./UserPage";
+import Register from "./Register";
 
 export default function Login() {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [show, setShow] = useState(false);
+  const [authResp, setAuthResp] = useState(null);
 
-  const handlePassword = (e) => {
-    setUser({
-      ...user,
-      password: e.target.value,
-    });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let authBody = { email: email, password: password };
+    console.log(authBody);
+
+    let authResp = await axios
+      .post("http://localhost:8080/api/v1/auth/authenticate", authBody)
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      //ADD ERROR HANDLING
+      .catch((error) => console.log(error));
+
+    setAuthResp(authResp);
+    console.log(authResp);
+
+    emptyForm();
   };
 
-  const handleEmail = (e) => {
-    setUser({
-      ...user,
-      email: e.target.value,
-    });
+  const emptyForm = () => {
+    setEmail("");
+    setPassword("");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const postUser = {
-      email: user.email,
-      password: user.password,
-      // role : "USER",
-    };
-    console.log(postUser);
-
-    axios
-      .post("http://localhost:8080/api/v1/auth/authenticate", postUser)
-      //   .then((response) => console.table(response))
-      .then((response) =>
-        sessionStorage.setItem("key", response.data.access_token)
-      )
-      .then(() => console.log(sessionStorage.getItem("key")));
-
-    setUser({
-      email: "",
-      password: "",
-    });
-  };
-
-  return (
-    <div>
-      <h1> Sign in </h1>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">E-mail:</label>
-            <input
-              type="text"
-              value={user.email}
-              onChange={handleEmail}
-              required
-            />
+  try {
+    if (!authResp) {
+      return (
+        <div className="register-container">
+          <h1 className="register-header"> Sign in </h1>
+          <div className="label-container">
+            <form className="register-labels" onSubmit={handleSubmit}>
+              <label htmlFor="email" id="email-label">
+                Enter e-mail:
+              </label>
+              <input
+                type="text"
+                id="email"
+                required
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <label htmlFor="password" id="password-label">
+                Enter password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                required
+                value={password}
+                onChange={(ev) => {
+                  setPassword(ev.target.value);
+                }}
+              />
+              <button type="submit">login</button>
+            </form>
+            <Register />
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type={show ? "text" : "password"}
-              // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              value={user.password}
-              onChange={handlePassword}
-              required
-            />
-          </div>
-          <input type="submit" />
-        </form>
-      </div>
-    </div>
-  );
+        </div>
+      );
+    } else {
+      return (
+        <>
+          <DashboardContext.Provider value={authResp}>
+            <UserPage />
+          </DashboardContext.Provider>
+          <p>You are logged in</p>
+        </>
+      );
+    }
+  } catch {
+    //ADD ERROR HANDLING
+    (error) => console.log(error);
+  }
 }
