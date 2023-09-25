@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { DashboardContext } from "./Context";
 import UserPage from "./UserPage";
-import HomePage from "./Home";
 import Register from "./Register";
 
 export default function Login() {
-  const [show, setShow] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [authResp, setAuthResp] = useState(null);
-
-  const showPassword = () => {
-    setShow(!show);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,7 +45,7 @@ export default function Login() {
               Enter e-mail:
             </label>
             <input
-              type="ema"
+              type="text"
               id="email"
               required
               value={email}
@@ -64,7 +57,7 @@ export default function Login() {
               Enter password:
             </label>
             <input
-              type={show ? "text" : "password"}
+              type="password"
               id="password"
               required
               value={password}
@@ -74,11 +67,6 @@ export default function Login() {
             />
             <button type="submit">login</button>
           </form>
-          <button onClick={showPassword} id="show-button">
-            {" "}
-            show{" "}
-          </button>
-
           <Register />
         </div>
       </div>

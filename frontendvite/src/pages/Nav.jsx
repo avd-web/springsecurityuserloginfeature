@@ -8,7 +8,6 @@ export default function Nav() {
         <li>
           <div>
             <Link to="http://localhost:5173/">Home</Link>
-            <Link to="http://localhost:5173/login">Account</Link>
           </div>
         </li>
       </ul>
