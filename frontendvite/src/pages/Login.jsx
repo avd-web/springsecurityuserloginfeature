@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { DashboardContext } from "./Context";
 import UserPage from "./UserPage";
+import HomePage from "./Home";
+import Register from "./Register";
 
 export default function Login() {
   const [show, setShow] = useState(false);
@@ -40,45 +42,55 @@ export default function Login() {
     setShow(false);
   };
 
-  return (
-    <div className="register-container">
-      <h1 className="register-header"> Sign in </h1>
-      <div className="label-container">
-        <form className="register-labels" onSubmit={handleSubmit}>
-          <label htmlFor="email" id="email-label">
-            Enter e-mail:
-          </label>
-          <input
-            type="ema"
-            id="email"
-            required
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <label htmlFor="password" id="password-label">
-            Enter password:
-          </label>
-          <input
-            type={show ? "text" : "password"}
-            id="password"
-            required
-            value={password}
-            onChange={(ev) => {
-              setPassword(ev.target.value);
-            }}
-          />
-          <button type="submit">login</button>
-        </form>
-        <button onClick={showPassword} id="show-button">
-          {" "}
-          show{" "}
-        </button>
+  if (!authResp) {
+    return (
+      <div className="register-container">
+        <h1 className="register-header"> Sign in </h1>
+        <div className="label-container">
+          <form className="register-labels" onSubmit={handleSubmit}>
+            <label htmlFor="email" id="email-label">
+              Enter e-mail:
+            </label>
+            <input
+              type="ema"
+              id="email"
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <label htmlFor="password" id="password-label">
+              Enter password:
+            </label>
+            <input
+              type={show ? "text" : "password"}
+              id="password"
+              required
+              value={password}
+              onChange={(ev) => {
+                setPassword(ev.target.value);
+              }}
+            />
+            <button type="submit">login</button>
+          </form>
+          <button onClick={showPassword} id="show-button">
+            {" "}
+            show{" "}
+          </button>
+
+          <Register />
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <>
         <DashboardContext.Provider value={authResp}>
           <UserPage />
         </DashboardContext.Provider>
-      </div>
-    </div>
-  );
+        <p>You are logged in</p>
+      </>
+    );
+  }
 }

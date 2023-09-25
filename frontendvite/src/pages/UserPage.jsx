@@ -6,18 +6,12 @@ export default function UserPage() {
   console.log(user);
   if (user) {
     console.log(user.data);
+    return <>{user.data.access_token}</>;
   }
 
   // const [user, setUser] = useState(null);
   // setUser(useContext(DashboardContext));
   // console.log(user);
 
-  return (
-    <>
-      {/* {() => {
-        return useContext(DashboardContext);
-      }} */}
-      {/* <p>{user ? user.data.firstname : "guest"}</p> */}
-    </>
-  );
+  return <></>;
 }
