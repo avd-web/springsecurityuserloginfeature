@@ -21,7 +21,8 @@ export default function Login() {
         console.log(response);
         return response;
       })
-      .catch();
+      //ADD ERROR HANDLING
+      .catch((error) => console.log(error));
 
     setAuthResp(authResp);
     console.log(authResp);
@@ -32,53 +33,57 @@ export default function Login() {
   const emptyForm = () => {
     setEmail("");
     setPassword("");
-    setShow(false);
   };
 
-  if (!authResp) {
-    return (
-      <div className="register-container">
-        <h1 className="register-header"> Sign in </h1>
-        <div className="label-container">
-          <form className="register-labels" onSubmit={handleSubmit}>
-            <label htmlFor="email" id="email-label">
-              Enter e-mail:
-            </label>
-            <input
-              type="text"
-              id="email"
-              required
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <label htmlFor="password" id="password-label">
-              Enter password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              required
-              value={password}
-              onChange={(ev) => {
-                setPassword(ev.target.value);
-              }}
-            />
-            <button type="submit">login</button>
-          </form>
-          <Register />
+  try {
+    if (!authResp) {
+      return (
+        <div className="register-container">
+          <h1 className="register-header"> Sign in </h1>
+          <div className="label-container">
+            <form className="register-labels" onSubmit={handleSubmit}>
+              <label htmlFor="email" id="email-label">
+                Enter e-mail:
+              </label>
+              <input
+                type="text"
+                id="email"
+                required
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <label htmlFor="password" id="password-label">
+                Enter password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                required
+                value={password}
+                onChange={(ev) => {
+                  setPassword(ev.target.value);
+                }}
+              />
+              <button type="submit">login</button>
+            </form>
+            <Register />
+          </div>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <DashboardContext.Provider value={authResp}>
-          <UserPage />
-        </DashboardContext.Provider>
-        <p>You are logged in</p>
-      </>
-    );
+      );
+    } else {
+      return (
+        <>
+          <DashboardContext.Provider value={authResp}>
+            <UserPage />
+          </DashboardContext.Provider>
+          <p>You are logged in</p>
+        </>
+      );
+    }
+  } catch {
+    //ADD ERROR HANDLING
+    (error) => console.log(error);
   }
 }
