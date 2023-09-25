@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DashboardContext } from "./Context";
 import UserPage from "./UserPage";
@@ -10,22 +10,32 @@ export default function Login() {
 
   const [authResp, setAuthResp] = useState(null);
 
+  useEffect(() => {
+    console.log("useeffect activated");
+    if (sessionStorage.getItem("key")) {
+      setAuthResp(sessionStorage.getItem("key"));
+      console.log("key set:");
+      console.table(sessionStorage.getItem("key"));
+    }
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let authBody = { email: email, password: password };
     console.log(authBody);
 
-    let authResp = await axios
+    let auth = await axios
       .post("http://localhost:8080/api/v1/auth/authenticate", authBody)
       .then((response) => {
-        console.log(response);
-        return response;
+        sessionStorage.setItem("key", response.data.access_token);
+        console.log(response.data.access_token);
+        return response.data.access_token;
       })
       //ADD ERROR HANDLING
       .catch((error) => console.log(error));
 
-    setAuthResp(authResp);
-    console.log(authResp);
+    setAuthResp(auth);
+    console.log(auth);
 
     emptyForm();
   };
@@ -37,6 +47,7 @@ export default function Login() {
 
   const handleLogout = () => {
     setAuthResp(null);
+    sessionStorage.removeItem("key");
   };
 
   try {
@@ -76,19 +87,19 @@ export default function Login() {
           </div>
         </div>
       );
-    } else {
-      return (
-        <>
-          <DashboardContext.Provider value={authResp}>
-            <UserPage />
-          </DashboardContext.Provider>
-          <p>You are logged in</p>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      );
     }
   } catch {
     //ADD ERROR HANDLING
     (error) => console.log(error);
   }
+
+  return (
+    <>
+      <DashboardContext.Provider value={authResp}>
+        <UserPage />
+      </DashboardContext.Provider>
+      <p>You are logged in</p>
+      <button onClick={handleLogout}>Logout</button>
+    </>
+  );
 }

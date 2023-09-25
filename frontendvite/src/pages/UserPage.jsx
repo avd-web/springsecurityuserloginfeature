@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { DashboardContext } from "./Context";
 
 export default function UserPage() {
-  const user = useContext(DashboardContext);
-  console.log(user);
+  const access_token = useContext(DashboardContext);
 
-  if (user) {
-    console.log(user.data);
-    return <>{user.data.access_token}</>;
+  if (access_token) {
+    return <>{access_token}</>;
+  } else {
+    return <>loading....</>;
   }
 }
