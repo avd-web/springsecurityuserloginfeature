@@ -7,15 +7,6 @@ export default function UserPage() {
   const access_token = useContext(DashboardContext);
   const [userData, setUserData] = useState();
 
-  // const test = axios.get(
-  //   "http://localhost:8080/api/v1/user",
-  //   {
-  //     headers: {
-  //       Authorization: `token ${access_token}`,
-  //     },
-  //   }.then()
-  // );
-
   const AuthHeader = () =>
     access_token === null
       ? null
@@ -30,17 +21,18 @@ export default function UserPage() {
     if (access_token) {
       axios
         .get("http://localhost:8080/api/v1/user", AuthHeader())
-        // .then((response) => console.log(response));
         .then((response) => setUserData(response.data));
-      // .then((response) => console.log(userData));
     }
   }, []);
 
   if (userData) {
     return (
       <>
-        <div>{userData.firstname}</div>
-        <div>{userData.lastname}</div>
+        <div>
+          Welcome back {userData.firstname} {userData.lastname}
+        </div>
+
+        <div></div>
       </>
     );
   } else {

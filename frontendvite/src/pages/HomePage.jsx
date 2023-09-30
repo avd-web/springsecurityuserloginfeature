@@ -5,7 +5,6 @@ import MoviePage from "./MoviePage";
 export default function HomePage() {
   return (
     <>
-      <Login />
       <MoviePage />
     </>
   );

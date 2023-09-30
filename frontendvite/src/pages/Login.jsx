@@ -3,6 +3,7 @@ import axios from "axios";
 import { DashboardContext } from "./Context";
 import UserPage from "./UserPage";
 import Register from "./Register";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -95,11 +96,14 @@ export default function Login() {
 
   return (
     <>
+      <p>
+        <Link to="/">Account</Link>You are logged in{" "}
+        <button onClick={handleLogout}>Logout</button>
+      </p>
+
       <DashboardContext.Provider value={authResp}>
         <UserPage />
       </DashboardContext.Provider>
-      <p>You are logged in</p>
-      <button onClick={handleLogout}>Logout</button>
     </>
   );
 }

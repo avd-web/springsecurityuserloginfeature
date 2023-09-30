@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Login from "../../pages/Login";
 
 export default function Nav() {
   var LinkData = [
     { name: "Movies", link: "/movie" },
     { name: "Recommended", link: "/recommended" },
-    { name: "Watchlist", link: "/watchlist" },
-    { name: "Login", link: "/" },
   ];
 
   return (

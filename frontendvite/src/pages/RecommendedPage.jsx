@@ -13,10 +13,6 @@ export default function RecommendedPage() {
       </>
     );
   } else {
-    return (
-      <>
-        <Login />
-      </>
-    );
+    return <>Please log in</>;
   }
 }
